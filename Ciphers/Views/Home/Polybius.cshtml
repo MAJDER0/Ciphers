@@ -1,0 +1,96 @@
+﻿<div class="Containerr" id="ContainerC1">
+    <div class="InternalContainer">
+        <p>ENCRYPT MESSAGE</p>
+        <br />
+        <input type="text" id="TextInput" placeholder="Enter a Message to Encrypt" />
+        <button type="button" id="submitButton" onclick="Encrypt()">ENCRYPT</button>
+        <br /><br />
+        <div class="encrypted encryptedcolor"></div>
+    </div>
+</div>
+
+<div class="Containerr Containerr2 ">
+    <div class="InternalContainer">
+        <p>DECRYPT MESSAGE</p>
+        <br />
+        <input type="text" id="TextInputDecrypt" placeholder="Enter a Message to Decrypt" />
+        <button type="button" id="submitDecrypt" onclick="Decrypt()">DECRYPT</button>
+        <br /><br />
+        <div class="decrypted"></div>
+    </div>
+</div>
+
+<script>
+    function Encrypt() {
+        // Polish alphabet for the Polybius Cipher
+        const polybiusAlphabet = [
+            ['A', 'Ą', 'B', 'C', 'Ć'],
+            ['D', 'E', 'Ę', 'F', 'G'],
+            ['H', 'I', 'J', 'K', 'L'],
+            ['Ł', 'M', 'N', 'Ń', 'O'],
+            ['Ó', 'P', 'Q', 'R', 'S'],
+            ['Ś', 'T', 'U', 'V', 'W'],
+            ['X', 'Y', 'Z', 'Ź', 'Ż']
+        ];
+
+        const inputText = document.getElementById("TextInput").value.toUpperCase();
+        let encryptedMessage = "";
+
+        for (let i = 0; i < inputText.length; i++) {
+            const char = inputText.charAt(i);
+            if (char === ' ') {
+                encryptedMessage += ' ';
+            } else {
+                for (let row = 0; row < polybiusAlphabet.length; row++) {
+                    for (let col = 0; col < polybiusAlphabet[row].length; col++) {
+                        if (polybiusAlphabet[row][col] === char) {
+                            encryptedMessage += (row+4) + '' + (col+4) + ' ';
+                        }
+                    }
+                }
+            }
+        }
+
+        document.querySelector('.encrypted').textContent = encryptedMessage.trim();
+    }
+
+    function Decrypt() {
+        const polybiusAlphabet = [
+            ['A', 'Ą', 'B', 'C', 'Ć'],
+            ['D', 'E', 'Ę', 'F', 'G'],
+            ['H', 'I', 'J', 'K', 'L'],
+            ['Ł', 'M', 'N', 'Ń', 'O'],
+            ['Ó', 'P', 'Q', 'R', 'S'],
+            ['Ś', 'T', 'U', 'V', 'W'],
+            ['X', 'Y', 'Z', 'Ź', 'Ż']
+        ];
+
+        const inputText = document.getElementById("TextInputDecrypt").value.replace(/\s/g, ''); // Remove spaces
+        let decryptedMessageContainer = document.querySelector('.decrypted');
+
+        // Clear previous content
+        decryptedMessageContainer.innerHTML = '';
+
+        // Updated regular expression to handle pairs with or without spaces
+        const pairs = inputText.match(/(..?)/g);
+
+        for (let i = 0; i < pairs.length; i++) {
+            const pair = pairs[i];
+            if (!isNaN(pair.charAt(0)) && !isNaN(pair.charAt(1))) {
+                const row = parseInt(pair.charAt(0)) - 4;
+                const col = parseInt(pair.charAt(1)) - 4;
+
+                // Ensure that row and col indices are within bounds
+                if (row >= 0 && row < polybiusAlphabet.length && col >= 0 && col < polybiusAlphabet[row].length) {
+                    decryptedMessageContainer.appendChild(document.createTextNode(polybiusAlphabet[row][col]));
+                } else {
+                    // Handle out-of-bounds indices
+                    decryptedMessageContainer.appendChild(document.createTextNode('?'));
+                }
+            } else {
+                // Handle non-numeric characters in pairs
+                decryptedMessageContainer.appendChild(document.createTextNode('?'));
+            }
+        }
+    }
+</script>

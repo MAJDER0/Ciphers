@@ -11,7 +11,6 @@
         <div class="encrypted encryptedcolor"></div>
 
         <script>
-
             let encryptkey = 0;
             let decryptkey = 0;
 
@@ -56,7 +55,7 @@
             var textInput = document.getElementById("TextInput");
             var button = document.getElementById("submitButton");
             var displayedMessage = document.querySelector(".encrypted");
-       
+
             function Encrypt() {
                 var inputText = textInput.value.toUpperCase();
                 var selectElement = document.getElementById("EncryptionKey");
@@ -70,12 +69,7 @@
 
                     for (var key in Alphabet) {
                         if (Alphabet[key] === character) {
-
-                            var newKey = (parseInt(key) + encryptkey)
-                            if(newKey>35)
-                            {
-                                newKey=newKey%35;
-                            }
+                            var newKey = (parseInt(key) + encryptkey) % 35;
                             encryptedMessage += Alphabet[newKey];
                             found = true;
                             break;
@@ -88,8 +82,7 @@
                 displayedMessage.innerText = "ENCRYPTED MESSAGE: " + encryptedMessage.replace(/\s/g, '');
             }
         </script>
-
-   </div>
+    </div>
 
     <div class="InternalContainer keys">
 
@@ -136,18 +129,17 @@
 
 </div>
 
-
 <div class="Containerr Containerr2 ">
 
     <div class="InternalContainer">
 
         <p>DECRYPT MESSAGE</p>
 
-        <br/>
+        <br />
         <input type="text" id="TextInputDecrypt" placeholder="Enter a Message to Decrypt" />
         <button type="button" id="submitDecrypt" onclick="Decrypt()">DECRYPT</button>
 
-        <br/><br/>
+        <br /><br />
 
         <div class="decrypted"></div>
 
@@ -170,11 +162,7 @@
 
                     for (var key in Alphabet) {
                         if (Alphabet[key] === character) {
-
-                            var newKey = (parseInt(key) - decryptkey)
-                            if (newKey <= 0) {
-                                newKey = newKey + 35;
-                            }
+                            var newKey = (parseInt(key) - decryptkey + 35) % 35;
                             decryptedMessage += Alphabet[newKey];
                             found = true;
                             break;
@@ -184,15 +172,14 @@
                         decryptedMessage += character;
                     }
                 }
-                displayedMessage2.innerText = "DECRYPTED MESSAGE: " decryptedMessage.replace(/\s/g, '');
+                displayedMessage2.innerText = "DECRYPTED MESSAGE: " + decryptedMessage.replace(/\s/g, '');
             }
-
         </script>
 
     </div>
     <div class="InternalContainer keys">
 
-        <label for="EncryptKey">Decryption Key:</label>
+        <label for="DecryptionKey">Decryption Key:</label>
         <select id="DecryptionKey">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -232,7 +219,6 @@
         </select>
 
     </div>
-
-
 </div>
+
 

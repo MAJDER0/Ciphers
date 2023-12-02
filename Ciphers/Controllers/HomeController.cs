@@ -27,6 +27,10 @@ namespace Ciphers.Controllers
         {
             return View();
         }
-        // Other actions
+
+        public IActionResult Polybius()
+        {
+            return View();
+        }
     }
 }
