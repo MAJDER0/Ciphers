@@ -1,0 +1,83 @@
+﻿<div class="Containerr" id="ContainerC1">
+    <div class="InternalContainer">
+        <p>ENCRYPT MESSAGE</p>
+        <br />
+        <input type="text" id="TextInput" placeholder="Enter a Message to Encrypt"/>
+        <button type="button" id="submitButton" onclick="Encrypt()">ENCRYPT</button>
+        <br /><br />
+        <div class="encrypted encryptedcolor"></div>
+    </div>
+
+    <div class="InternalContainer">
+        <p>Encryption Key:</p>
+        <br />
+        <input type="text" id="encryptionKey" placeholder="Enter Encryption Key" />
+    </div>
+</div>
+
+<div class="Containerr Containerr2 ">
+    <div class="InternalContainer">
+        <p>DECRYPT MESSAGE</p>
+        <br />
+        <input type="text" id="TextInputDecrypt" placeholder="Enter a Message to Decrypt" />
+        <button type="button" id="submitDecrypt" onclick="Decrypt()">DECRYPT</button>
+        <br /><br />
+        <div class="decrypted"></div>
+    </div>
+    <div class="InternalContainer">
+        <p>Decryption Key:</p>
+        <br />
+        <input type="text" id="DencryptionKey" placeholder="Enter Decryption Key" />
+    </div>
+</div>
+
+<script>
+    const alphabet = "aąbcćdeęfghijklłmnńoóprsśtuwyzźż";
+    const alphabetLength = alphabet.length;
+
+    function Encrypt() {
+        const plainText = document.getElementById("TextInput").value.toLowerCase();
+        const encryptionKey = document.getElementById("encryptionKey").value.toLowerCase();
+        const encryptedText = encryptVigenere(plainText, encryptionKey);
+        document.querySelector(".encrypted").innerText = `ENCRYPTED MESSAGE: ${encryptedText.toUpperCase()}`;
+    }
+
+    function Decrypt() {
+        const encryptedText = document.getElementById("TextInputDecrypt").value.toLowerCase();
+        const decryptionKey = document.getElementById("DencryptionKey").value.toLowerCase();
+        const decryptedText = decryptVigenere(encryptedText, decryptionKey);
+        document.querySelector(".decrypted").innerText = `DECRYPTED MESSAGE: ${decryptedText.toUpperCase()}`;
+    }
+
+    function encryptVigenere(plainText, key) {
+        let encryptedText = "";
+        for (let i = 0; i < plainText.length; i++) {
+            const char = plainText.charAt(i);
+            if (char === ' ') {
+                encryptedText += ' ';
+            } else {
+                const plainTextIndex = alphabet.indexOf(char);
+                const keyIndex = alphabet.indexOf(key.charAt(i % key.length));
+                const encryptedIndex = (plainTextIndex + keyIndex) % alphabetLength;
+                encryptedText += alphabet.charAt(encryptedIndex);
+            }
+        }
+        return encryptedText;
+    }
+
+    function decryptVigenere(encryptedText, key) {
+        let decryptedText = "";
+        for (let i = 0; i < encryptedText.length; i++) {
+            const char = encryptedText.charAt(i);
+            if (char === ' ') {
+                decryptedText += ' ';
+            } else {
+                const encryptedIndex = alphabet.indexOf(char);
+                const keyIndex = alphabet.indexOf(key.charAt(i % key.length));
+                const decryptedIndex = (encryptedIndex - keyIndex + alphabetLength) % alphabetLength;
+                decryptedText += alphabet.charAt(decryptedIndex);
+            }
+        }
+        return decryptedText;
+    }
+</script>

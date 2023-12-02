@@ -22,6 +22,11 @@ namespace Ciphers.Controllers
         {
             return View();
         }
+
+        public IActionResult Vigenere()
+        {
+            return View();
+        }
         // Other actions
     }
 }

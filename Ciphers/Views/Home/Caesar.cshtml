@@ -1,9 +1,9 @@
-﻿<div class="ContainerCesar" id="ContainerCesar1">
+﻿<div class="Containerr" id="ContainerC1">
 
     <div class="InternalContainer">
         <p>ENCRYPT MESSAGE</p>
         <br />
-        <input type="text" id="TextInput" />
+        <input type="text" id="TextInput" placeholder="Enter a Message to Encrypt" />
         <button type="button" id="submitButton" onclick="Encrypt()">ENCRYPT</button>
 
         <br /><br />
@@ -11,6 +11,48 @@
         <div class="encrypted encryptedcolor"></div>
 
         <script>
+
+            let encryptkey = 0;
+            let decryptkey = 0;
+
+            var Alphabet = {
+                1: 'A',
+                2: 'Ą',
+                3: 'B',
+                4: 'C',
+                5: 'Ć',
+                6: 'D',
+                7: 'E',
+                8: 'Ę',
+                9: 'F',
+                10: 'G',
+                11: 'H',
+                12: 'I',
+                13: 'J',
+                14: 'K',
+                15: 'L',
+                16: 'Ł',
+                17: 'M',
+                18: 'N',
+                19: 'Ń',
+                20: 'O',
+                21: 'Ó',
+                22: 'P',
+                23: 'Q',
+                24: 'R',
+                25: 'S',
+                26: 'Ś',
+                27: 'T',
+                28: 'U',
+                29: 'V',
+                30: 'W',
+                31: 'X',
+                32: 'Y',
+                33: 'Z',
+                34: 'Ź',
+                35: 'Ż'
+            };
+
             var textInput = document.getElementById("TextInput");
             var button = document.getElementById("submitButton");
             var displayedMessage = document.querySelector(".encrypted");
@@ -43,7 +85,7 @@
                         encryptedMessage += character;
                     }
                 }
-                displayedMessage.innerText = encryptedMessage.replace(/\s/g, '');
+                displayedMessage.innerText = "ENCRYPTED MESSAGE: " + encryptedMessage.replace(/\s/g, '');
             }
         </script>
 
@@ -95,14 +137,14 @@
 </div>
 
 
-<div class="ContainerCesar ContainerCesar2 ">
+<div class="Containerr Containerr2 ">
 
     <div class="InternalContainer">
 
         <p>DECRYPT MESSAGE</p>
 
         <br/>
-        <input type="text" id="TextInputDecrypt" />
+        <input type="text" id="TextInputDecrypt" placeholder="Enter a Message to Decrypt" />
         <button type="button" id="submitDecrypt" onclick="Decrypt()">DECRYPT</button>
 
         <br/><br/>
@@ -142,7 +184,7 @@
                         decryptedMessage += character;
                     }
                 }
-                displayedMessage2.innerText = decryptedMessage.replace(/\s/g, '');
+                displayedMessage2.innerText = "DECRYPTED MESSAGE: " decryptedMessage.replace(/\s/g, '');
             }
 
         </script>
