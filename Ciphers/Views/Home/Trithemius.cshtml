@@ -1,0 +1,64 @@
+﻿<div class="Containerr" id="ContainerC1">
+    <div class="InternalContainer">
+        <p>ENCRYPT MESSAGE</p>
+        <br />
+        <input type="text" id="TextInput" placeholder="Enter a Message to Encrypt" />
+        <button type="button" id="submitButton" onclick="Encrypt()">ENCRYPT</button>
+        <br /><br />
+        <div class="encrypted encryptedcolor"></div>
+    </div>
+</div>
+
+<div class="Containerr Containerr2 ">
+    <div class="InternalContainer">
+        <p>DECRYPT MESSAGE</p>
+        <br />
+        <input type="text" id="TextInputDecrypt" placeholder="Enter a Message to Decrypt" />
+        <button type="button" id="submitDecrypt" onclick="Decrypt()">DECRYPT</button>
+        <br /><br />
+        <div class="decrypted"></div>
+    </div>
+</div>
+
+<script>
+    // Function to encrypt using Trithemius Cipher
+    function Encrypt() {
+        const inputText = document.getElementById("TextInput").value;
+        const encryptedText = trithemiusEncrypt(inputText);
+        document.querySelector(".encrypted").textContent = `Encrypted Message: ${encryptedText}`;
+    }
+
+    // Function to decrypt using Trithemius Cipher
+    function Decrypt() {
+        const inputText = document.getElementById("TextInputDecrypt").value;
+        const decryptedText = trithemiusDecrypt(inputText);
+        document.querySelector(".decrypted").textContent = `Decrypted Message: ${decryptedText}`;
+    }
+
+    // Trithemius Cipher Encryption
+    function trithemiusEncrypt(input) {
+        const polishAlphabet = "aąbcćdeęfghijklłmnńoópqrsśtuwyzźż";
+        return Array.from(input, (char, i) => {
+            const isUppercase = char === char.toUpperCase();
+            const index = polishAlphabet.indexOf(char.toLowerCase());
+            if (index === -1) return char;
+            const newIndex = (index + i) % polishAlphabet.length;
+            const encryptedChar = polishAlphabet[newIndex];
+            return isUppercase ? encryptedChar.toUpperCase() : encryptedChar;
+        }).join('');
+    }
+
+    // Trithemius Cipher Decryption
+    function trithemiusDecrypt(input) {
+        const polishAlphabet = "aąbcćdeęfghijklłmnńoópqrsśtuwyzźż";
+        return Array.from(input, (char, i) => {
+            const isUppercase = char === char.toUpperCase();
+            const index = polishAlphabet.indexOf(char.toLowerCase());
+            if (index === -1) return char;
+            let newIndex = (index - i) % polishAlphabet.length;
+            if (newIndex < 0) newIndex += polishAlphabet.length;
+            const decryptedChar = polishAlphabet[newIndex];
+            return isUppercase ? decryptedChar.toUpperCase() : decryptedChar;
+        }).join('');
+    }
+</script>

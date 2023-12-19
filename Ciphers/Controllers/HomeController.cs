@@ -32,5 +32,10 @@ namespace Ciphers.Controllers
         {
             return View();
         }
+
+        public IActionResult Trithemius()
+        {
+            return View();
+        }
     }
 }
